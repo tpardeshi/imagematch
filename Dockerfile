@@ -10,6 +10,7 @@ WORKDIR imagematch
 
 EXPOSE 8080
 RUN npm i
+ENV PORT=8080
 
 
 ENTRYPOINT ["npm"]
