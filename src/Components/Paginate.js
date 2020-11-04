@@ -57,15 +57,11 @@ export default function Paginate(props) {
     React.useEffect(() => {
         const SetImages = () => {
             if (props.screenshotsEN.length !== 0) {
-                const elementsLeft =
-                    props.screenshotsEN[0].images.slice(offset, (offset + perPage));
+                const elementsLeft = props.screenshotsEN[0].images.slice(offset, (offset + perPage));
                 setElementLeft(elementsLeft)
             }
             if (props.screenshotsOther.length !== 0) {
-                const elementsRight = props.screenshotsOther[0].images.slice(
-                    offset,
-                    offset + perPage
-                );
+                const elementsRight = props.screenshotsOther[0].images.slice(offset, (offset + perPage));
                 setElementRight(elementsRight)
             }
         }

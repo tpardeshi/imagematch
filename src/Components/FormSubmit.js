@@ -8,11 +8,11 @@ import {
   Button,
 } from "@patternfly/react-core";
 
-export default function SimpleDropdown(props) {
+export default function FormSubmit(props) {
   const [selectProductsVersion, setSelectProductsVersion] = useState("");
   const [selectLocales, setSelectLocales] = useState("");
   return (
-    <Form>
+    <Form onSubmit={props.handleSubmit}>
       <FormGroup label="Select Version" fieldId="version">
         <FormSelect
           value={selectProductsVersion ? selectProductsVersion : props.selectProductsVersion}
@@ -48,7 +48,7 @@ export default function SimpleDropdown(props) {
         </FormSelect>
       </FormGroup>
       <ActionGroup>
-        <Button type="button" onClick={() => props.handleSubmit(props.selectProductsVersion, props.selectLocales)}>Submit</Button>
+        <Button type="submit" value="Submit">Submit</Button>
       </ActionGroup>
     </Form>
   );

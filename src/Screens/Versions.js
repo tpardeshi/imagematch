@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import BASE_URL from "../API/BASE_URL";
-import SimpleDropdown from "../Components/SimpleDropdown";
+import FormSubmit from "../Components/FormSubmit";
 import Paginate from "../Components/Paginate"
 import Breadcrumbs from "../Components/Breadcrumbs";
 import { useHistory } from "react-router";
 import SimpleEmptyState from "../Components/SimpleEmptyState";
 import constant from "../Constants/EnglishScreens.json"
-import { PageSection, PageSectionVariants, Bullseye, DataToolbar, Divider, Card, CardBody, DataToolbarItem } from "@patternfly/react-core";
+import { PageSection, PageSectionVariants, Bullseye, Divider, Card, CardBody, DataToolbarItem } from "@patternfly/react-core";
 
 export default function Versions(props) {
   const [elementsRight, setElementsRight] = useState([]);
@@ -17,7 +17,6 @@ export default function Versions(props) {
   const [currentPage, setCurrentPage] = useState(0);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
-  const [onSubmitValue, setonSubmitValue] = useState(false)
   const [productsVersion, setProductsVersion] = useState([]);
   const [locales, setLocales] = useState([]);
   const [selectProductsVersion, setSelectProductsVersion] = useState("");
@@ -61,9 +60,10 @@ export default function Versions(props) {
   }, [previousProductId]);
 
   // To get selected Version and Locale to get screenshots
-  React.useEffect(() => {
-    const FetchScreenshots = async () => {
-      setonSubmitValue(false);
+  const onFormSubmit = async (event) => {
+    event.preventDefault();
+    let error;
+    try {
       const screenshotsData = await axios(`${BASE_URL}/screenshots`, {
         params: {
           product_version_id: selectProductsVersion,
@@ -86,39 +86,30 @@ export default function Versions(props) {
         setItemCount(Math.ceil(screenshotsENData.data[0].images.length))
       }
     }
-    FetchScreenshots();
-  }, [onSubmitValue])
-
-
-  const onSubmit = () => {
-    setonSubmitValue(true)
+    catch (err) {
+      error = err;
+    }
   }
-
   return (
-    <div>
+    <>
       <PageSection variant={PageSectionVariants.light}>
         <Breadcrumbs />
         {locales && productsVersion &&
           ((screenshotsOther && screenshotsOther.length !== 0) ||
             (screenshotsEN && screenshotsEN.length !== 0)) &&
           (
-            <DataToolbar
-              variant="label"
-              id="data-toolbar-group-types"
-              className="pf-c-data-toolbar">
-              <DataToolbarItem>
-                <SimpleDropdown
-                  selectProductsVersion={selectProductsVersion}
-                  selectLocales={selectLocales}
-                  productsVersion={productsVersion}
-                  locales={locales}
-                  handleVersionChange={(e, event) =>
-                    handleDropdownChangeVersion(e, event)}
-                  handleLocaleChange={(e) => handleDropdownChangeLocale(e)}
-                  handleSubmit={onSubmit}
-                />
-              </DataToolbarItem>
-            </DataToolbar>
+            <DataToolbarItem>
+              <FormSubmit
+                selectProductsVersion={selectProductsVersion}
+                selectLocales={selectLocales}
+                productsVersion={productsVersion}
+                locales={locales}
+                handleVersionChange={(e, event) => handleDropdownChangeVersion(e, event)}
+                handleLocaleChange={(e, event) => handleDropdownChangeLocale(e, event)}
+                handleSubmit={onFormSubmit}
+              />
+            </DataToolbarItem>
+
           )}
       </PageSection>
       <PageSection>
@@ -148,13 +139,12 @@ export default function Versions(props) {
                   <CardBody>
                     <SimpleEmptyState />
                     <Divider className="mb-4" />
-                    <SimpleDropdown
+                    <FormSubmit
                       productsVersion={productsVersion}
                       locales={locales}
-                      handleVersionChange={(e, event) =>
-                        handleDropdownChangeVersion(e, event)}
-                      handleLocaleChange={(e) => handleDropdownChangeLocale(e)}
-                      handleSubmit={onSubmit}
+                      handleVersionChange={(e, event) => handleDropdownChangeVersion(e, event)}
+                      handleLocaleChange={(e, event) => handleDropdownChangeLocale(e, event)}
+                      handleSubmit={onFormSubmit}
                     />
                   </CardBody>
                 </Card>
@@ -162,6 +152,6 @@ export default function Versions(props) {
             ))
         }
       </PageSection>
-    </div>
+    </>
   );
 }
