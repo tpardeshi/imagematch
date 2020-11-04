@@ -116,20 +116,18 @@ export default function Versions(props) {
         {(screenshotsOther && screenshotsOther.length !== 0) ||
           (screenshotsEN && screenshotsEN.length !== 0) ?
           (
-            <div className="form-container">
-              <Paginate
-                screenshotsOther={screenshotsOther}
-                screenshotsEN={screenshotsEN}
-                itemCount={itemCount}
-                elements={elements}
-                elementsRight={elementsRight}
-                elementsLeft={elementsLeft}
-                offset={offset}
-                currentPage={currentPage}
-                page={page}
-                perPage={perPage}
-              />
-            </div>
+            <Paginate
+              screenshotsOther={screenshotsOther}
+              screenshotsEN={screenshotsEN}
+              itemCount={itemCount}
+              elements={elements}
+              elementsRight={elementsRight}
+              elementsLeft={elementsLeft}
+              offset={offset}
+              currentPage={currentPage}
+              page={page}
+              perPage={perPage}
+            />
           ) :
           (
             locales && productsVersion &&
