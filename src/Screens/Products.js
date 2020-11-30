@@ -30,7 +30,6 @@ export default function Products() {
         {products.map((product) => {
           return (
             <Card className="product-card" key={product.id} isHoverable>
-              <CardHeader></CardHeader>
               <CardBody>
                 <Link to={`/products/${product.id}/screenshots`}>
                   <TextContent>

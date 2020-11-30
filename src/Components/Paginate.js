@@ -13,6 +13,7 @@ export default function Paginate(props) {
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(10);
 
+
     //Set the page
     const onSetPage = (_event, pageNumber) => {
         setPage(pageNumber)
@@ -68,111 +69,107 @@ export default function Paginate(props) {
         SetImages();
     }, [offset, perPage])
 
-    function Pagination_for_en() {
-        return (
-            <div>
-                <Pagination
-                    widgetId="pagination-options-menu-bottom"
-                    itemCount={props.itemCount}
-                    perPage={perPage}
-                    page={page}
-                    variant={PaginationVariant.bottom}
-                    onSetPage={onSetPage}
-                    onPerPageSelect={onPerPageSelect}
-                    onNextClick={onNextClick}
-                    onPreviousClick={onPreviousClick}
-                    onFirstClick={onFirstClick}
-                    onLastClick={onLastClick}
-                />
-                <div className="en_screens mb-4">
-                    {elementsLeft.map((image, index) => (
-                        <img src={image} alt="" key={index} className="image" />
-                    ))}
-                </div>
-
-                <Pagination
-                    widgetId="pagination-options-menu-bottom"
-                    itemCount={props.itemCount}
-                    perPage={perPage}
-                    page={page}
-                    variant={PaginationVariant.bottom}
-                    onSetPage={onSetPage}
-                    onPerPageSelect={onPerPageSelect}
-                    onNextClick={onNextClick}
-                    onPreviousClick={onPreviousClick}
-                    onFirstClick={onFirstClick}
-                    onLastClick={onLastClick}
-                />
+    const paginateEN = () => (
+        <>
+            <Pagination
+                widgetId="pagination-options-menu-bottom"
+                itemCount={props.itemCount}
+                perPage={perPage}
+                page={page}
+                variant={PaginationVariant.bottom}
+                onSetPage={onSetPage}
+                onPerPageSelect={onPerPageSelect}
+                onNextClick={onNextClick}
+                onPreviousClick={onPreviousClick}
+                onFirstClick={onFirstClick}
+                onLastClick={onLastClick}
+            />
+            <div className="en_screens mb-4">
+                {elementsLeft.map((image, index) => (
+                    <img src={image} alt="" key={index} className="image" />
+                ))}
             </div>
-        );
-    }
 
-    function Pagination_for_other() {
-        return (
-            <div>
-                <Pagination
-                    widgetId="pagination-options-menu-bottom"
-                    itemCount={props.itemCount}
-                    perPage={perPage}
-                    page={page}
-                    variant={PaginationVariant.bottom}
-                    onSetPage={onSetPage}
-                    onPerPageSelect={onPerPageSelect}
-                    onNextClick={onNextClick}
-                    onPreviousClick={onPreviousClick}
-                    onFirstClick={onFirstClick}
-                    onLastClick={onLastClick}
-                />
-                {/* For screenshots display side by side */}
-                <div id="image-compare">
-                    <Split gutter="md">
-                        {elementsLeft.length !== 0}
-                        {
-                            <SplitItem>
-                                {elementsLeft.map((image, index) => (
-                                    <img src={image} alt="" key={index} className="image" />
-                                ))}
-                            </SplitItem>
-                        }
-                        {elementsRight.length !== 0}
-                        {
-                            <SplitItem>
-                                {elementsRight.map((image, index) => (
-                                    <img src={image} alt="" key={index} className="image" />
-                                ))}
-                            </SplitItem>
-                        }
-                    </Split>
-                </div>
-                <Pagination
-                    widgetId="pagination-options-menu-bottom"
-                    itemCount={props.itemCount}
-                    perPage={perPage}
-                    page={page}
-                    variant={PaginationVariant.bottom}
-                    onSetPage={onSetPage}
-                    onPerPageSelect={onPerPageSelect}
-                    onNextClick={onNextClick}
-                    onPreviousClick={onPreviousClick}
-                    onFirstClick={onFirstClick}
-                    onLastClick={onLastClick}
-                />
-            </div >
-        );
-    }
+            <Pagination
+                widgetId="pagination-options-menu-bottom"
+                itemCount={props.itemCount}
+                perPage={perPage}
+                page={page}
+                variant={PaginationVariant.bottom}
+                onSetPage={onSetPage}
+                onPerPageSelect={onPerPageSelect}
+                onNextClick={onNextClick}
+                onPreviousClick={onPreviousClick}
+                onFirstClick={onFirstClick}
+                onLastClick={onLastClick}
+            />
+        </>
+    )
+
+    const paginateOther = () => (
+        <>
+            <Pagination
+                widgetId="pagination-options-menu-bottom"
+                itemCount={props.itemCount}
+                perPage={perPage}
+                page={page}
+                variant={PaginationVariant.bottom}
+                onSetPage={onSetPage}
+                onPerPageSelect={onPerPageSelect}
+                onNextClick={onNextClick}
+                onPreviousClick={onPreviousClick}
+                onFirstClick={onFirstClick}
+                onLastClick={onLastClick}
+            />
+            {/* For screenshots display side by side */}
+            <div id="image-compare">
+                <Split gutter="md">
+                    {elementsLeft.length !== 0}
+                    {
+                        <SplitItem>
+                            {elementsLeft.map((image, index) => (
+                                <img src={image} alt="" key={index} className="image" />
+                            ))}
+                        </SplitItem>
+                    }
+                    {elementsRight.length !== 0}
+                    {
+                        <SplitItem>
+                            {elementsRight.map((image, index) => (
+                                <img src={image} alt="" key={index} className="image" />
+                            ))}
+                        </SplitItem>
+                    }
+                </Split>
+            </div>
+            <Pagination
+                widgetId="pagination-options-menu-bottom"
+                itemCount={props.itemCount}
+                perPage={perPage}
+                page={page}
+                variant={PaginationVariant.bottom}
+                onSetPage={onSetPage}
+                onPerPageSelect={onPerPageSelect}
+                onNextClick={onNextClick}
+                onPreviousClick={onPreviousClick}
+                onFirstClick={onFirstClick}
+                onLastClick={onLastClick}
+            />
+        </>
+    )
 
     if (props.screenshotsEN.length === 0) {
         return <SimpleEmptyState />;
     }
     else if (props.screenshotsOther.length === 0) {
-        return <div className="mb-4">{Pagination_for_en()}</div>;
+        return <div className="mb-4">{paginateEN()}</div>;
     }
     else if (
         props.screenshotsOther[0].id === props.screenshotsEN[0].id) {
-        return <div className="mb-4">{Pagination_for_en()}</div>;
+        return <div className="mb-4">{paginateEN()}</div>;
     }
     else {
-        return <div className="mb-4">{Pagination_for_other()}</div>;
+        return <div className="mb-4">{paginateOther()}</div>;
     }
 
 }
