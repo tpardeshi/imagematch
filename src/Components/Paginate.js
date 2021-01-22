@@ -13,7 +13,8 @@ export default function Paginate(props) {
   const [offset, setOffset] = useState();
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
-  // const [changeLayout, setChangeLayout] = useState();
+  let [IdL, setIdL] = useState(0);
+  let [IdR, setIdR] = useState(0);
 
   //Set the page
   const onSetPage = (_event, pageNumber) => {
@@ -27,26 +28,34 @@ export default function Paginate(props) {
 
   //Next set of Items 
   const onNextClick = (_event, page) => {
+    setIdL(IdL, IdL++)
+    setIdR(IdR, IdR++)
     setPage(page)
-    setOffset((page) * (perPage))
+    setOffset((page - 1) * (perPage))
   };
 
   //Previous set of Items
   const onPreviousClick = (_event, page) => {
+    setIdL((page - 1) * (perPage))
+    setIdR((page - 1) * (perPage))
     setPage(page)
     setOffset((page - 1) * (perPage));
   };
 
   //First set of Items
   const onFirstClick = (_event, page) => {
+    setIdL(0)
+    setIdR(0)
     setPage(page)
     setOffset(0)
   };
 
   //Last set of items
   const onLastClick = (_event, page) => {
+    setIdL((page - 1) * (perPage))
+    setIdR((page - 1) * (perPage))
     setPage(page)
-    setOffset((props.itemCount) - perPage)
+    setOffset((page - 1) * (perPage));
   };
 
   React.useEffect(() => {
@@ -70,7 +79,6 @@ export default function Paginate(props) {
     SetImages();
   }, [offset, perPage, screenshotsEN, screenshotsOther])
 
-
   const paginateEN = () => (
     <>
       <Pagination
@@ -90,7 +98,7 @@ export default function Paginate(props) {
       <div className="en_screens mb-4">
         {elementsLeft.map((image, index) => (
           <div>
-            <div> <Badge>id: {uuid()} </Badge> </div>
+            <div> <Badge id={IdL++}>id: {IdL}</Badge> </div>
             <img src={image} alt="" id={index} key={uuid()} className="image" />
           </div>
         ))}
@@ -136,7 +144,7 @@ export default function Paginate(props) {
                   <div>
                     {elementsLeft.map((image, index) => (
                       <div>
-                        <div> <Badge>id {}</Badge> </div>
+                        <div> <Badge id={IdL++}>id: {IdL}</Badge> </div>
                         <img src={image} alt="" key={index} id={index} className="image" />
                       </div>
                     ))}
@@ -151,7 +159,7 @@ export default function Paginate(props) {
                   <div>
                     {elementsRight.map((image, index) => (
                       <div>
-                        <div> <Badge>id {}</Badge> </div>
+                        <div> <Badge id={IdR++}>id: {IdR}</Badge> </div>
                         <img src={image} alt="" key={index} id={index} className="image" />
                       </div>
                     ))}
@@ -167,9 +175,9 @@ export default function Paginate(props) {
             {
               elementsLeft.map((image, index) => (
                 <div>
-                  <div> <Badge>id {index}</Badge> </div>
+                  <div> <Badge id={IdL++}>id: {IdL}</Badge> </div>
                   <img src={image} alt="" key={index} className="image1" />
-                  <div> <Badge>id {index}</Badge> </div>
+                  <div> <Badge id={IdL}>id: {IdL}</Badge> </div>
                   <img src={elementsRight[index]} alt="" key={index} className="image1" />
                   <br />
                   <br />
