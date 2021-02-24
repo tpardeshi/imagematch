@@ -31,9 +31,7 @@ export default function Products() {
               <CardBody>
                 <Link to={`/products/${product.id}/screenshots`}>
                   <TextContent>
-                    <Text
-                      className="product-title"
-                      component={TextVariants.h4}>
+                    <Text className="product-title" component={TextVariants.h4}>
                       {product.name}
                     </Text>
                   </TextContent>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Split, SplitItem } from "@patternfly/react-core";
 import { Pagination, PaginationVariant, Badge } from "@patternfly/react-core";
 import SimpleEmptyState from "./SimpleEmptyState";
-import { uuid } from 'uuidv4';
+import { uuid } from "uuidv4";
 
 export default function Paginate(props) {
   const [screenshotsOther, setScreenshotsOther] = useState([]);
@@ -18,44 +18,44 @@ export default function Paginate(props) {
 
   //Set the page
   const onSetPage = (_event, pageNumber) => {
-    setPage(pageNumber)
+    setPage(pageNumber);
   };
 
   //Items to be displayed per page
   const onPerPageSelect = (_event, perPage) => {
-    setPerPage(perPage)
+    setPerPage(perPage);
   };
 
-  //Next set of Items 
+  //Next set of Items
   const onNextClick = (_event, page) => {
-    setIdL(IdL, IdL++)
-    setIdR(IdR, IdR++)
-    setPage(page)
-    setOffset((page - 1) * (perPage))
+    setIdL(IdL, IdL++);
+    setIdR(IdR, IdR++);
+    setPage(page);
+    setOffset((page - 1) * perPage);
   };
 
   //Previous set of Items
   const onPreviousClick = (_event, page) => {
-    setIdL((page - 1) * (perPage))
-    setIdR((page - 1) * (perPage))
-    setPage(page)
-    setOffset((page - 1) * (perPage));
+    setIdL((page - 1) * perPage);
+    setIdR((page - 1) * perPage);
+    setPage(page);
+    setOffset((page - 1) * perPage);
   };
 
   //First set of Items
   const onFirstClick = (_event, page) => {
-    setIdL(0)
-    setIdR(0)
-    setPage(page)
-    setOffset(0)
+    setIdL(0);
+    setIdR(0);
+    setPage(page);
+    setOffset(0);
   };
 
   //Last set of items
   const onLastClick = (_event, page) => {
-    setIdL((page - 1) * (perPage))
-    setIdR((page - 1) * (perPage))
-    setPage(page)
-    setOffset((page - 1) * (perPage));
+    setIdL((page - 1) * perPage);
+    setIdR((page - 1) * perPage);
+    setPage(page);
+    setOffset((page - 1) * perPage);
   };
 
   React.useEffect(() => {
@@ -68,16 +68,22 @@ export default function Paginate(props) {
   React.useEffect(() => {
     const SetImages = () => {
       if (props.screenshotsEN.length !== 0) {
-        const elementsLeft = props.screenshotsEN[0].images.slice(offset, (offset + perPage));
-        setElementLeft(elementsLeft)
+        const elementsLeft = props.screenshotsEN[0].images.slice(
+          offset,
+          offset + perPage
+        );
+        setElementLeft(elementsLeft);
       }
       if (props.screenshotsOther.length !== 0) {
-        const elementsRight = props.screenshotsOther[0].images.slice(offset, (offset + perPage));
-        setElementRight(elementsRight)
+        const elementsRight = props.screenshotsOther[0].images.slice(
+          offset,
+          offset + perPage
+        );
+        setElementRight(elementsRight);
       }
-    }
+    };
     SetImages();
-  }, [offset, perPage, screenshotsEN, screenshotsOther])
+  }, [offset, perPage, screenshotsEN, screenshotsOther]);
 
   const paginateEN = () => (
     <>
@@ -98,7 +104,10 @@ export default function Paginate(props) {
       <div className="en_screens mb-4">
         {elementsLeft.map((image, index) => (
           <div>
-            <div> <Badge id={IdL++}>id: {IdL}</Badge> </div>
+            <div>
+              {" "}
+              <Badge id={IdL++}>id: {IdL}</Badge>{" "}
+            </div>
             <img src={image} alt="" id={index} key={uuid()} className="image" />
           </div>
         ))}
@@ -117,7 +126,7 @@ export default function Paginate(props) {
         onLastClick={onLastClick}
       />
     </>
-  )
+  );
 
   const paginateOther = () => (
     <>
@@ -134,60 +143,85 @@ export default function Paginate(props) {
         onFirstClick={onFirstClick}
         onLastClick={onLastClick}
       />
-      {props.changeLayout == true ? (
-        //  For screenshots display side by side 
-        < div >
+      {props.changeLayout === true ? (
+        //  For screenshots display side by side
+        <div>
           <Split gutter="md">
             <div>
-              {elementsLeft.length &&
+              {elementsLeft.length && (
                 <SplitItem>
                   <div>
                     {elementsLeft.map((image, index) => (
                       <div>
-                        <div> <Badge id={IdL++}>id: {IdL}</Badge> </div>
-                        <img src={image} alt="" key={index} id={index} className="image" />
+                        <div>
+                          {" "}
+                          <Badge id={IdL++}>id: {IdL}</Badge>{" "}
+                        </div>
+                        <img
+                          src={image}
+                          alt=""
+                          key={index}
+                          id={index}
+                          className="image_EN"
+                        />
                       </div>
                     ))}
                   </div>
                 </SplitItem>
-
-              }
+              )}
             </div>
             <div>
-              {elementsRight.length &&
+              {elementsRight.length && (
                 <SplitItem>
                   <div>
                     {elementsRight.map((image, index) => (
                       <div>
-                        <div> <Badge id={IdR++}>id: {IdR}</Badge> </div>
-                        <img src={image} alt="" key={index} id={index} className="image" />
+                        <div>
+                          {" "}
+                          <Badge id={IdR++}>id: {IdR}</Badge>{" "}
+                        </div>
+                        <img
+                          src={image}
+                          alt=""
+                          key={index}
+                          id={index}
+                          className="image_other"
+                        />
                       </div>
                     ))}
                   </div>
                 </SplitItem>
-              }
+              )}
             </div>
           </Split>
         </div>
       ) : (
-          //  For screenshots display one by one 
-          < div >
-            {
-              elementsLeft.map((image, index) => (
-                <div>
-                  <div> <Badge id={IdL++}>id: {IdL}</Badge> </div>
-                  <img src={image} alt="" key={index} className="image1" />
-                  <div> <Badge id={IdL}>id: {IdL}</Badge> </div>
-                  <img src={elementsRight[index]} alt="" key={index} className="image1" />
-                  <br />
-                  <br />
-                  <br />
-                </div>
-              ))
-            }
-          </div >
-        )
-      }
+        //  For screenshots display one by one
+        <div>
+          {elementsLeft.map((image, index) => (
+            <div>
+              <div>
+                {" "}
+                <Badge id={IdL++}>id: {IdL}</Badge>{" "}
+              </div>
+              <img src={image} alt="" key={index} className="image1" />
+              <div>
+                {" "}
+                <Badge id={IdL}>id: {IdL}</Badge>{" "}
+              </div>
+              <img
+                src={elementsRight[index]}
+                alt=""
+                key={index}
+                className="image1"
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+          ))}
+        </div>
+      )}
       <Pagination
         widgetId="pagination-options-menu-bottom"
         itemCount={itemCount}
@@ -202,21 +236,23 @@ export default function Paginate(props) {
         onLastClick={onLastClick}
       />
     </>
-  )
+  );
 
   if (props.screenshotsEN.length === 0) {
     return <SimpleEmptyState />;
-  }
-  else if ((typeof itemCount !== "undefined") && (props.screenshotsOther.length === 0)) {
+  } else if (
+    typeof itemCount !== "undefined" &&
+    props.screenshotsOther.length === 0
+  ) {
     return <div className="mb-4">{paginateEN()}</div>;
-  }
-  else if ((typeof itemCount !== "undefined") && (props.screenshotsOther[0].id === props.screenshotsEN[0].id)) {
+  } else if (
+    typeof itemCount !== "undefined" &&
+    props.screenshotsOther[0].id === props.screenshotsEN[0].id
+  ) {
     return <div className="mb-4">{paginateEN()}</div>;
-  }
-  else {
+  } else {
     if (typeof itemCount !== "undefined")
-      return <div className="mb-4">{paginateOther()}</div>
-    else
-      return null
+      return <div className="mb-4">{paginateOther()}</div>;
+    else return null;
   }
 }
