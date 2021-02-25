@@ -6,23 +6,22 @@ import {
   Button,
   DataToolbarContent,
   DataToolbarItem,
-  Badge,
-  Title,
 } from "@patternfly/react-core";
-import ReactTooltip from "react-tooltip";
-import { GripHorizontalIcon, GripVerticalIcon } from "@patternfly/react-icons";
+import { Switch } from "@patternfly/react-core";
 
 export default function PaginateForm(props) {
   const [selectProductsVersion, setSelectProductsVersion] = useState("");
   const [selectLocales, setSelectLocales] = useState("");
-  const [hover, setHover] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-  // function handleChangeName(name) {
-  //   return name === "Change Layout"
-  //     ? setName("Rechange Layout")
-  //     : setName("Change Layout");
-  // }
-
+  function handleChange(isChecked) {
+    setIsChecked(isChecked);
+    if (isChecked === true) {
+      props.handleLayout("Horizontal");
+    } else {
+      props.handleLayout("Vertical");
+    }
+  }
   return (
     <>
       <Form onSubmit={props.handleSubmit}>
@@ -83,54 +82,22 @@ export default function PaginateForm(props) {
               Submit
             </Button>
           </DataToolbarItem>
-          {/* <DataToolbarItem className="layout">
-            <Button
+          <DataToolbarItem>
+            <Switch
+              id="simple-switch"
+              label="Two Column Layout on"
+              labelOff="Two Column Layout off"
+              className="layout"
+              isChecked={isChecked}
+              onChange={handleChange}
               isDisabled={
                 props.selectLocales === "3" ||
-                props.screenshotsOther.length == 0
+                props.screenshotsOther.length === 0
                   ? true
                   : false
               }
-              onClick={() => {
-                props.handleLayout(name);
-                handleChangeName(name);
-              }}
-            >
-              {name}
-            </Button>
-          </DataToolbarItem> */}
-          <GripHorizontalIcon
-            data-tip
-            data-for="horizontal"
-            className="layout"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            onClick={() => {
-              props.handleLayout("Horizontal");
-            }}
-          ></GripHorizontalIcon>
-          <div>
-            {hover && (
-              <ReactTooltip class="horizontal" id="horizontal" type="error">
-                <span>Two Column Layout</span>
-              </ReactTooltip>
-            )}
-            {hover && (
-              <ReactTooltip class="vertical" id="vertical" type="error">
-                <span>One Column Layout</span>
-              </ReactTooltip>
-            )}
-          </div>
-          <GripVerticalIcon
-            data-tip
-            data-for="vertical"
-            className="layout2"
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            onClick={() => {
-              props.handleLayout("Vertical");
-            }}
-          ></GripVerticalIcon>
+            />
+          </DataToolbarItem>
         </DataToolbarContent>
       </Form>
     </>

@@ -22,31 +22,7 @@
 img:hover {
   box-shadow: 0 0 4px 2px black;
 }
+
 .layout {
-  position: absolute;
-  right: 10px;
+  left: 320%;
 }
-.layout2 {
-  position: absolute;
-  right: 30px;
-}
-
-.layout:hover {
-  color: blue;
-}
-.layout2:hover {
-  color: blue;
-}
-
-/* .image_other {
-  margin-right: 20%;
-}
-.image1 {
-  margin-left: 15%;
-  margin-right: 30%;
-}
-
-.image {
-  margin-left: 15%;
-  margin-right: 30%;
-} */
